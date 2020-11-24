@@ -8,7 +8,7 @@
   <div class="w3-container">
   
 
-  <table class="w3-table w3-striped">
+  <table class="w3-table w3-striped w3-mobile">
     <tr>
       <th>DNI</th>
       <th>Apellido</th>

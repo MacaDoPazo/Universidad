@@ -10,7 +10,7 @@
   </p><br>
     
   </div>
-   <div class="w3-col s6 w3-center">
+   <div class="w3-col s6 w3-center w3-mobile">
   <div class="w3-card w3-margin">
   <div class="w3-container w3-center w3-dark-grey w3-padding">
       <p><b>${materia.nombre}</b><br>
@@ -33,7 +33,7 @@
                     
                     <input type="hidden" name="dni" value=${sessionScope.usuario_dni }>
                     <input type="hidden" name="idMateria" value=${materia.id }>
-                   <button type="submit" class="w3-bar-item w3-button w3-green">Anotarse</button>
+                   <button type="submit" class="w3-bar-item w3-button w3-red">Anotarse</button>
                 </form>
   </div>
 </div>
