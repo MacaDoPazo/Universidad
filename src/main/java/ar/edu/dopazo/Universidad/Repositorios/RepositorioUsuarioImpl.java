@@ -6,7 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.dopazo.Universidad.Modelos.Usuario;
+import ar.edu.dopazo.Universidad.Modelos.*;
+
 @Repository
 public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
@@ -19,6 +20,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				.add(Restrictions.eq("dni", usuario.getDni()))
 				.add(Restrictions.eq("legajo", usuario.getLegajo()))
 				.uniqueResult();
+	}
+	@Override
+	public Usuario buscarUsuarioPorDni(Long dni) {
+		// TODO Auto-generated method stub
+		return sesion.getCurrentSession().get(Usuario.class, dni);
 	}
 
 }

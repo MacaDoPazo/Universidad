@@ -8,7 +8,7 @@
       <p><b>${materia.nombre}</b><br>
     ${materia.profesor.nombre } ${materia.profesor.apellido }<br>
   		${materia.horario }</p><br>
-    <a href="#">Anotarse</a>
+    <a href="detalle?idMateria=${materia.id }">Anotarse</a>
   </div>
   </div>
   </div>
