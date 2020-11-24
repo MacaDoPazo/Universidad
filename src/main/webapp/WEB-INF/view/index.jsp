@@ -8,7 +8,10 @@
       <p><b>${materia.nombre}</b><br>
     ${materia.profesor.nombre } ${materia.profesor.apellido }<br>
   		${materia.horario }</p><br>
-    <a href="detalle?idMateria=${materia.id }">Anotarse</a>
+  		<c:if test="${sessionScope.usuario_rol != 'Admin'}">
+  		<a href="detalle?idMateria=${materia.id }">Anotarse</a>
+  		</c:if>
+    
   </div>
   </div>
   </div>

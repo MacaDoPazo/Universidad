@@ -17,7 +17,7 @@
         <c:choose>
 		<c:when test="${sessionScope.usuario_nombre ==null}">
    
-            <a href="#" class="w3-bar-item w3-button w3-margin">Universidad</a>
+            <a href="inicio" class="w3-bar-item w3-button w3-margin">Universidad</a>
             <div class="w3-right w3-margin">
                 <form  class="w3-row-padding" action="login" method="POST" modelAttribute="usuario">
                     <div class="w3-third">
@@ -32,7 +32,7 @@
           </div>
         </c:when>
 	<c:when test="${sessionScope.usuario_rol == 'Admin'}">
-	<a href="#" class="w3-bar-item w3-button w3-margin">Universidad</a>
+	<a href="inicio" class="w3-bar-item w3-button w3-margin">Universidad</a>
             <div class="w3-right w3-margin">
                 
                     <div class="w3-bar-item w3-button" >
@@ -45,11 +45,14 @@
 <%@include file="navAdmin.jsp" %>  
 	</c:when>
 	<c:when test="${sessionScope.usuario_nombre != null}">
-	<a href="#" class="w3-bar-item w3-button w3-margin">Universidad</a>
+	<a href="inicio" class="w3-bar-item w3-button w3-margin">Universidad</a>
             <div class="w3-right w3-margin">
                 <div class="w3-bar-item w3-button" >
                     <p><b>Bienvenido</b>  ${sessionScope.usuario_nombre}</p>
                     </div>
+                    <div class="w3-bar-item w3-button w3-green">
+                    <a href="listarMateriasAnotadas">Mis materias</a>
+               		</div>
                     <div class="w3-bar-item w3-button w3-green">
                     <a href="logout">Salir</a>
                		</div>

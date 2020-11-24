@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.dopazo.Universidad.Modelos.*;
-import ar.edu.dopazo.Universidad.Servicios.*;
+import ar.edu.dopazo.Universidad.Modelos.Materia;
+import ar.edu.dopazo.Universidad.Modelos.Profesor;
+import ar.edu.dopazo.Universidad.Modelos.Usuario_Materia;
+import ar.edu.dopazo.Universidad.Servicios.ServicioMateria;
+
+
 @Controller
 public class ControladorMateria {
 
@@ -47,5 +51,66 @@ public class ControladorMateria {
 		
 		model.put("listaMaterias",listarMaterias);
 		return new ModelAndView("index", model);
+	}
+	@RequestMapping(path = "/listarMateriasAnotadas")
+	public ModelAndView anotarse(HttpServletRequest request) {
+		Long dni = (Long) request.getSession().getAttribute("usuario_dni");
+		ModelMap model = new ModelMap();
+		try {
+			List<Usuario_Materia> listaMaterasAnotadas = servicioMateria.listarMateriasAnotadas(dni);
+			List<Materia> listarMaterias = servicioMateria.listarMateriasDisponibles();
+			model.put("listaMateriasAnotadas",listaMaterasAnotadas);
+			return new ModelAndView("materiasAnotadas", model);
+		}
+		catch (Exception e) {
+			
+			model.put("error",e.getMessage());
+			return new ModelAndView("materiasAnotadas", model);
+		}
+		 
+		
+		
+	}
+	@RequestMapping(path = "/listarMaterias")
+	public ModelAndView listarMaterias(HttpServletRequest request) {
+		
+		List<Materia>listaMaterias = servicioMateria.listarMaterias();
+		ModelMap model = new ModelMap();
+		model.put("listaMaterias",listaMaterias);
+		return new ModelAndView("listaDeMaterias", model);
+		
+		
+	}
+	@RequestMapping(path = "/materiaNueva")
+	public ModelAndView materiaNueva() {
+		
+		
+		List<Profesor> listaProfesores = servicioMateria.listarProfesores();
+		
+		ModelMap model = new ModelMap();
+		model.put("listaProfesores",listaProfesores);
+		return new ModelAndView("listaDeMaterias", model);
+		
+		
+	}
+	@RequestMapping(path = "/guardarMateria")
+	public ModelAndView guardarMateria(@RequestParam("nombre") String nombre,
+			@RequestParam("capacidad") Integer capacidad,
+			@RequestParam("horario") String horario,
+			@RequestParam("dni") Integer dniProfe ) {
+		
+		Materia materia = new Materia();
+		materia.setNombre(nombre);
+		materia.setMaximoAlumnos(capacidad);
+		materia.setHorario(horario);
+		Profesor profesor = servicioMateria.buscarProfesorPorDni(dniProfe);
+		materia.setProfesor(profesor);
+		servicioMateria.guardarMateria(materia);
+		List<Materia>listaMaterias = servicioMateria.listarMaterias();
+		ModelMap model = new ModelMap();
+		model.put("listaMaterias",listaMaterias);
+		return new ModelAndView("listaDeMaterias", model);
+		
+		
 	}
 }

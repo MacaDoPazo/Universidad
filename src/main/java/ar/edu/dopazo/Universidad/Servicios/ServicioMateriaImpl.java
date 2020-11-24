@@ -15,7 +15,7 @@ import ar.edu.dopazo.Universidad.Modelos.*;
 import ar.edu.dopazo.Universidad.Repositorios.*;
 @Service
 @Transactional
-public class ServicioMateriaImpl implements ServicioMateria {
+public abstract class ServicioMateriaImpl implements ServicioMateria {
 
 	@Inject
 	private RepositorioMateria respositorioMateria;
@@ -63,6 +63,40 @@ public class ServicioMateriaImpl implements ServicioMateria {
 		respositorioMateria.actualizarMateria(materia);
 		respositorioMateria.anotarseAmateria(usuario_materia);
 		
+	}
+
+	@Override
+	public List<Usuario_Materia> listarMateriasAnotadas(Long dni) throws Exception{
+		List<Usuario_Materia> listaMaterias = respositorioMateria.listarMateriasAnotadas(dni);
+		if(listaMaterias.size() == 0)
+		{
+			throw new Exception("No se anoto a ninguna materia");
+		}
+		return listaMaterias;
+	}
+
+	@Override
+	public List<Materia> listarMaterias() {
+		// TODO Auto-generated method stub
+		return respositorioMateria.listarMateriasDisponibles();
+	}
+
+	@Override
+	public Profesor buscarProfesorPorDni(Integer dniProfe) {
+		// TODO Auto-generated method stub
+		return respositorioMateria.buscarProfesorPorDni(dniProfe);
+	}
+
+	@Override
+	public void guardarMateria(Materia materia) {
+		// TODO Auto-generated method stub
+		respositorioMateria.guardarMateria(materia);
+	}
+
+	@Override
+	public List<Profesor> listarProfesores() {
+		// TODO Auto-generated method stub
+		return respositorioMateria.listarProfesores();
 	}
 
 }

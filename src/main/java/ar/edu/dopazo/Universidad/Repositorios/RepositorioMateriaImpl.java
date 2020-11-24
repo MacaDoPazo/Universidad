@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.dopazo.Universidad.Modelos.*;
@@ -23,7 +24,7 @@ import ar.edu.dopazo.Universidad.Modelos.*;
 @Repository
 public class RepositorioMateriaImpl implements RepositorioMateria {
 
-	@Inject
+	@Autowired
 	SessionFactory sesion;
 	@Override
 	public List<Materia> listarMateriasDisponibles() {
@@ -51,6 +52,24 @@ public class RepositorioMateriaImpl implements RepositorioMateria {
 		return sesion.getCurrentSession().createCriteria(Usuario_Materia.class)
 				.createAlias("usuario", "alumno")
 				.add(Restrictions.eq("alumno.dni", dni))
+				.list();
+	}
+	@Override
+	public Profesor buscarProfesorPorDni(Integer dniProfe) {
+		// TODO Auto-generated method stub
+		return (Profesor) sesion.getCurrentSession().createCriteria(Profesor.class)
+				.add(Restrictions.eq("dni", dniProfe))
+				.uniqueResult();
+	}
+	@Override
+	public void guardarMateria(Materia materia) {
+		// TODO Auto-generated method stub
+		sesion.getCurrentSession().save(materia);
+	}
+	@Override
+	public List<Profesor> listarProfesores() {
+		// TODO Auto-generated method stub
+		return sesion.getCurrentSession().createCriteria(Profesor.class)
 				.list();
 	}
 	

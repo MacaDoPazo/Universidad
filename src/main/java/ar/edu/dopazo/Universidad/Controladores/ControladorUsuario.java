@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.dopazo.Universidad.Modelos.*;
-import ar.edu.dopazo.Universidad.Servicios.*;
+import ar.edu.dopazo.Universidad.Modelos.Materia;
+import ar.edu.dopazo.Universidad.Modelos.Usuario;
+import ar.edu.dopazo.Universidad.Servicios.ServicioMateria;
+import ar.edu.dopazo.Universidad.Servicios.ServicioUsuario;
+
 @Controller
 public class ControladorUsuario {
 
