@@ -12,9 +12,11 @@
       <th>Profesor</th>
     </tr>
     <c:forEach items="${listaMateriasAnotadas}" var="materia">
+      <tr>
       <td>${materia.materia.nombre}</td>
       <td>${materia.materia.horario}</td>
       <td>${materia.materia.profesor.nombre} ${materia.materia.profesor.apellido}</td>
+      </tr>   
     </c:forEach>
     
   </table>

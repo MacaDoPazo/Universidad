@@ -6,16 +6,22 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.dopazo.Universidad.Modelos.*;
+import ar.edu.dopazo.Universidad.Modelos.Materia;
+import ar.edu.dopazo.Universidad.Modelos.Profesor;
+import ar.edu.dopazo.Universidad.Modelos.Usuario;
+import ar.edu.dopazo.Universidad.Modelos.Usuario_Materia;
+import ar.edu.dopazo.Universidad.Repositorios.RepositorioMateria;
+import ar.edu.dopazo.Universidad.Repositorios.RepositorioUsuario;
 
-import ar.edu.dopazo.Universidad.Repositorios.*;
 @Service
 @Transactional
-public abstract class ServicioMateriaImpl implements ServicioMateria {
+
+public class ServicioMateriaImpl implements ServicioMateria {
+
 
 	@Inject
 	private RepositorioMateria respositorioMateria;
@@ -72,6 +78,11 @@ public abstract class ServicioMateriaImpl implements ServicioMateria {
 		{
 			throw new Exception("No se anoto a ninguna materia");
 		}
+		Collections.sort(listaMaterias, new Comparator<Usuario_Materia>() {
+			   public int compare(Usuario_Materia mat1, Usuario_Materia mat2) {
+			      return mat1.getMateria().getNombre().compareTo(mat2.getMateria().getNombre());
+			   }
+			});
 		return listaMaterias;
 	}
 
@@ -98,5 +109,12 @@ public abstract class ServicioMateriaImpl implements ServicioMateria {
 		// TODO Auto-generated method stub
 		return respositorioMateria.listarProfesores();
 	}
+
+	@Override
+	public void guardarProfesor(Profesor profesor) {
+		// TODO Auto-generated method stub
+		respositorioMateria.guardarProfesor(profesor);
+	}
+
 
 }

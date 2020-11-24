@@ -24,4 +24,6 @@ public interface RepositorioMateria {
 
 	List<Profesor> listarProfesores();
 
+	void guardarProfesor(Profesor profesor);
+
 }

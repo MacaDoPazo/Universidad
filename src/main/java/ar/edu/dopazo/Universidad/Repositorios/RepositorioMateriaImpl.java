@@ -72,6 +72,11 @@ public class RepositorioMateriaImpl implements RepositorioMateria {
 		return sesion.getCurrentSession().createCriteria(Profesor.class)
 				.list();
 	}
+	@Override
+	public void guardarProfesor(Profesor profesor) {
+		// TODO Auto-generated method stub
+		sesion.getCurrentSession().save(profesor);
+	}
 	
 
 }

@@ -44,7 +44,7 @@ public class ControladorUsuario {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
 			model.put("error", "Usuario o clave incorrecta");
 		}
-		return new ModelAndView("login", model);
+		return new ModelAndView("index", model);
 	}
 	
 	@RequestMapping(path = "/logout")

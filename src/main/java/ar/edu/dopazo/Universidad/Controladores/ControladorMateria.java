@@ -25,15 +25,28 @@ public class ControladorMateria {
 	@Inject
 	private ServicioMateria servicioMateria;
 	@RequestMapping(path = "/detalle", method = RequestMethod.GET)
-	public ModelAndView detalleMateria(@RequestParam("idMateria") Long idMateria) {
-		Materia materia = servicioMateria.buscarMateriaPorId(idMateria);
-		ModelMap model = new ModelMap();
-		model.put("materia",materia);
-		return new ModelAndView("detalleMateria", model);
+	public ModelAndView detalleMateria(@RequestParam("idMateria") Long idMateria,
+			HttpServletRequest request) {
+		String rol = (String) request.getSession().getAttribute("usuario_rol");
+		if(rol.equals("alumno"))
+		{
+			Materia materia = servicioMateria.buscarMateriaPorId(idMateria);
+			ModelMap model = new ModelMap();
+			model.put("materia",materia);
+			return new ModelAndView("detalleMateria", model);
+		}
+		else
+		{
+			return new ModelAndView("index");
+		}
 	}
 	@RequestMapping(path = "/anotarse", method = RequestMethod.POST)
 	public ModelAndView anotarse(@RequestParam("idMateria") Long idMateria,
-			@RequestParam("dni") Long dni) {
+			@RequestParam("dni") Long dni,
+			HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("usuario_rol").equals("alumno"))
+		{
 		try {
 			servicioMateria.anotarseAmateria(idMateria,dni);
 		}
@@ -51,9 +64,17 @@ public class ControladorMateria {
 		
 		model.put("listaMaterias",listarMaterias);
 		return new ModelAndView("index", model);
+		}
+		else
+		{
+			return new ModelAndView("index");
+		}
 	}
 	@RequestMapping(path = "/listarMateriasAnotadas")
 	public ModelAndView anotarse(HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("usuario_rol").equals("alumno"))
+		{	
 		Long dni = (Long) request.getSession().getAttribute("usuario_dni");
 		ModelMap model = new ModelMap();
 		try {
@@ -67,38 +88,56 @@ public class ControladorMateria {
 			model.put("error",e.getMessage());
 			return new ModelAndView("materiasAnotadas", model);
 		}
-		 
+		}
+		else
+		{
+			return new ModelAndView("index");
+		}
 		
 		
 	}
 	@RequestMapping(path = "/listarMaterias")
 	public ModelAndView listarMaterias(HttpServletRequest request) {
 		
+		if(request.getSession().getAttribute("usuario_rol").equals("Admin"))
+		{	
 		List<Materia>listaMaterias = servicioMateria.listarMaterias();
 		ModelMap model = new ModelMap();
 		model.put("listaMaterias",listaMaterias);
 		return new ModelAndView("listaDeMaterias", model);
+		}
+		
+			return new ModelAndView("index");
 		
 		
 	}
 	@RequestMapping(path = "/materiaNueva")
-	public ModelAndView materiaNueva() {
+	public ModelAndView materiaNueva(HttpServletRequest request) {
 		
+		if(request.getSession().getAttribute("usuario_rol").equals("Admin"))
+		{	
 		
 		List<Profesor> listaProfesores = servicioMateria.listarProfesores();
 		
 		ModelMap model = new ModelMap();
 		model.put("listaProfesores",listaProfesores);
-		return new ModelAndView("listaDeMaterias", model);
-		
+		return new ModelAndView("materiaNueva", model);
+		}
+		else
+		{
+			return new ModelAndView("index");
+		}
 		
 	}
 	@RequestMapping(path = "/guardarMateria")
 	public ModelAndView guardarMateria(@RequestParam("nombre") String nombre,
 			@RequestParam("capacidad") Integer capacidad,
 			@RequestParam("horario") String horario,
-			@RequestParam("dni") Integer dniProfe ) {
+			@RequestParam("dni") Integer dniProfe,
+			HttpServletRequest request) {
 		
+		if(request.getSession().getAttribute("usuario_rol").equals("Admin"))
+		{	
 		Materia materia = new Materia();
 		materia.setNombre(nombre);
 		materia.setMaximoAlumnos(capacidad);
@@ -110,7 +149,66 @@ public class ControladorMateria {
 		ModelMap model = new ModelMap();
 		model.put("listaMaterias",listaMaterias);
 		return new ModelAndView("listaDeMaterias", model);
+		}
+		else
+		{
+			return new ModelAndView("index");
+		}
 		
+	}
+	@RequestMapping(path = "/listarProfesores")
+	public ModelAndView listarProfesores(HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("usuario_rol").equals("Admin"))
+		{	
+		List<Profesor>listaProfesores = servicioMateria.listarProfesores();
+		ModelMap model = new ModelMap();
+		model.put("listaProfesores",listaProfesores);
+		return new ModelAndView("listaDeProfesores", model);
+		}
+		else
+		{
+			return new ModelAndView("index");
+		}
+		
+	}
+	@RequestMapping(path = "/profesorNuevo")
+	public ModelAndView profesorNuevo(HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("usuario_rol").equals("Admin"))
+		{	
+			return new ModelAndView("profesorNuevo");
+		}
+		else
+		{
+			return new ModelAndView("index");
+		}
+		
+	}
+	@RequestMapping(path = "/guardarProfesor")
+	public ModelAndView guardarProfesor(@RequestParam("dni") Integer dni,
+			@RequestParam("apellido") String apellido,
+			@RequestParam("nombre") String nombre,
+			@RequestParam("estado") String estado,
+			HttpServletRequest request) {
+		
+		if(request.getSession().getAttribute("usuario_rol").equals("Admin"))
+		{
+		Profesor profesor = new Profesor();
+		profesor.setDni(dni);
+		profesor.setApellido(apellido);
+		profesor.setNombre(nombre);
+		profesor.setEstado(estado);
+		servicioMateria.guardarProfesor(profesor);
+		List<Profesor>listaProfesores = servicioMateria.listarProfesores();
+		ModelMap model = new ModelMap();
+		model.put("listaProfesores",listaProfesores);
+		return new ModelAndView("listaDeProfesores", model);
+		}
+		else
+		{
+			return new ModelAndView("index");
+		}
 		
 	}
 }

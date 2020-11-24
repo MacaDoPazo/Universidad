@@ -18,7 +18,7 @@ import ar.edu.dopazo.Universidad.Servicios.ServicioMateria;
 public class ControladorInicio {
 
 	@Inject
-	 ServicioMateria servicioMateria;
+	private ServicioMateria servicioMateria;
 	@RequestMapping("/inicio")
 	public ModelAndView irAInicio(HttpServletRequest request)
 	{

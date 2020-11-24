@@ -2,21 +2,17 @@ package ar.edu.dopazo.Universidad.Servicios;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+import ar.edu.dopazo.Universidad.Modelos.Materia;
+import ar.edu.dopazo.Universidad.Modelos.Profesor;
+import ar.edu.dopazo.Universidad.Modelos.Usuario_Materia;
 
-import org.springframework.stereotype.Service;
-
-import ar.edu.dopazo.Universidad.Modelos.*;
-
-@Service
-@Transactional
 public interface ServicioMateria {
 
 	List<Materia> listarMateriasDisponibles();
 
-	Materia buscarMateriaPorId(Long idMateria);
-
 	void anotarseAmateria(Long idMateria, Long dni) throws Exception;
+
+	Materia buscarMateriaPorId(Long idMateria);
 
 	List<Usuario_Materia> listarMateriasAnotadas(Long dni) throws Exception;
 
@@ -24,8 +20,10 @@ public interface ServicioMateria {
 
 	Profesor buscarProfesorPorDni(Integer dniProfe);
 
+	List<Profesor> listarProfesores();
+
 	void guardarMateria(Materia materia);
 
-	List<Profesor> listarProfesores();
+	void guardarProfesor(Profesor profesor);
 
 }

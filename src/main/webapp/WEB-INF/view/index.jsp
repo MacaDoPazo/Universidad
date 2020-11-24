@@ -7,7 +7,8 @@
   <div class="w3-container w3-center w3-dark-grey w3-padding">
       <p><b>${materia.nombre}</b><br>
     ${materia.profesor.nombre } ${materia.profesor.apellido }<br>
-  		${materia.horario }</p><br>
+  		${materia.horario }<br>
+  		Capacidad alumnos: ${materia.maximoAlumnos }</p>
   		<c:if test="${sessionScope.usuario_rol != 'Admin'}">
   		<a href="detalle?idMateria=${materia.id }">Anotarse</a>
   		</c:if>
